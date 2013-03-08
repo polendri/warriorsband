@@ -110,12 +110,12 @@ else {
   echo "<ul>\n";
   while (($file = readdir($dir)) !== false) {
     if($file === "." || $file === "..") continue;
-    $path_suffix = "/" . $album_id . "/thumbs/" . $file;
-    list($width, $height, $image_type) = getimagesize($photo_album_abs_path . $path_suffix);
+    $photo_path_suffix = "/" . $album_id . "/thumbs/" . $file;
+    list($width, $height, $image_type) = getimagesize($photo_album_abs_path . $photo_path_suffix);
     $photo_linkpath = $photo_album_rel_path . $photo_path_suffix;
     echo "<li class=\"photoalbum\" style=\"width:" . $width . "px\">\n";
     echo "<a href=\"$domain?page=album&amp;album_id=$album_id&amp;photo_id=" . substr($file, 0, 4) . "\">";
-    echo "<img src=\"" . $photo_album_rel_path . $path_suffix . "\"/>\n";
+    echo "<img src=\"" . $photo_linkpath . "\"/>\n";
     echo "</a></li>\n";
   }
   echo "</ul>";

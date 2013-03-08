@@ -39,43 +39,49 @@ if(auth_view_photos()) {
 <?php
   } else {
 ?>
-<table>
-  <tr>
-    <th></th>
-    <th>Title</th>
-    <th>Description</th>
-<?php if (auth_delete_photos()) { ?>
-    <th></th>
-<?php } ?>
-  </tr>
+<ul>
 <?php
     while ($album_row = $result->fetch_assoc()) {
-      $image_preview_path = $photo_album_rel_path . "/" . $album_row['album_id'] . "/thumbs/0000.jpg";
+      $path_suffix = $album_row['album_id'] . "/thumbs/0000.jpg";
+      $image_preview_path = $photo_album_rel_path . "/" . $path_suffix;
+      list($width, $height, $image_type) = getimagesize($photo_album_abs_path . $path_suffix);
       $album_link = $domain . '?page=album&amp;album_id=' . $album_row['album_id'];
-      echo '<tr>';
-      echo '<td><a href="' . $album_link . '"><img src="' . $image_preview_path . '"/></a></td>';
-      echo '<td><a href="' . $album_link . '">' . $album_row['title'] . '</a></td>';
-      echo "<td>" . $album_row['description'] . "</td>";
+?>
+  <li class="imageborder" style="width:<?php echo $width ?>">
+    <a href="<?php echo $album_link ?>">
+      <img src="<?php echo $image_preview_path ?>"/>
+    </a>
+    <br />
+    <a href="<?php echo $album_link ?>">
+      <span style="font: 1.2em Arial, Helvetica, sans-serif">
+        <?php echo $album_row['title'] ?>
+      </span>
+    </a>
+    <br />
+    <?php echo $album_row['description'] ?>
+<?php
       if (auth_delete_photos()) { ?>
-<td>
-  <form action="/albums/deletealbum-exec.php" method="POST">
-    <input type="hidden" name="album_id" value="<?php echo $album_row['album_id'] ?>" />
+    <br />
+    <form action="/albums/deletealbum-exec.php" method="POST">
+      <input type="hidden" name="album_id" value="<?php echo $album_row['album_id'] ?>" />
 <?php
-  if ((isset($_GET['msg'])) && ($_GET['msg'] == "confirmdelete")) {
+        if ((isset($_GET['msg'])) && ($_GET['msg'] == "confirmdelete")) {
 ?>
-    <input type="hidden" name="confirm" value="true" />
+      <input type="hidden" name="confirm" value="true" />
 <?php
-  }
+        }
 ?>
-    <input style="width:100px" type="submit" value="Delete" />
-  </form>
-</td>
-<?php }
-      echo '</tr>';
+      <input style="width:100px" type="submit" value="Delete" />
+    </form>
+<?php
+      }
+?>
+  </li>
+<?php
+      $result->free();
     }
-    $result->free();
 ?>
-</table>
+</ul>
 <?php
   }
 } else {
