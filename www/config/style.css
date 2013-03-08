@@ -78,7 +78,9 @@ td.content {
     padding: 3px;
     border: 1px solid #fed403;
     text-align: center;
-    font: italic 0.8em Arial, Helvetica, sans-serif;
+    font-size: 80%;
+    font-style: italic;
+    line-height: 200%;
 }
 .imageborder img {
     border: 1px solid #fed403;

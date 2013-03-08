@@ -44,21 +44,20 @@ if(auth_view_photos()) {
     while ($album_row = $result->fetch_assoc()) {
       $path_suffix = $album_row['album_id'] . "/thumbs/0000.jpg";
       $image_preview_path = $photo_album_rel_path . "/" . $path_suffix;
-      list($width, $height, $image_type) = getimagesize($photo_album_abs_path . $path_suffix);
+      list($width, $height, $image_type) = getimagesize($photo_album_abs_path . "/" . $path_suffix);
       $album_link = $domain . '?page=album&amp;album_id=' . $album_row['album_id'];
 ?>
-  <li class="imageborder" style="width:<?php echo $width ?>">
+  <li class="imageborder" style="width:<?php echo $width + 2 ?>px">
     <a href="<?php echo $album_link ?>">
       <img src="<?php echo $image_preview_path ?>"/>
     </a>
-    <br />
-    <a href="<?php echo $album_link ?>">
-      <span style="font: 1.2em Arial, Helvetica, sans-serif">
+    <span style="font-size: 120%; font-style:normal">
+      <a href="<?php echo $album_link ?>">
         <?php echo $album_row['title'] ?>
-      </span>
-    </a>
+      </a>
+    </span>
     <br />
-    <?php echo $album_row['description'] ?>
+      <?php echo $album_row['description'] ?>
 <?php
       if (auth_delete_photos()) { ?>
     <br />
