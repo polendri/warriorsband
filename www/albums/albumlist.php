@@ -47,7 +47,7 @@ if(auth_view_photos()) {
       list($width, $height, $image_type) = getimagesize($photo_album_abs_path . "/" . $path_suffix);
       $album_link = $domain . '?page=album&amp;album_id=' . $album_row['album_id'];
 ?>
-  <li class="imageborder" style="width:<?php echo $width + 2 ?>px">
+  <li class="imageborderwithcaption" style="width:<?php echo $width + 2 ?>px">
     <a href="<?php echo $album_link ?>">
       <img src="<?php echo $image_preview_path ?>"/>
     </a>
