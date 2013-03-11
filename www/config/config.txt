@@ -14,10 +14,19 @@ content, modified appropriately.
  *  config.php
  *
  *  General settings for the website
+ *
+ *  REMEMBER TO EDIT CONFIG.TXT AS WELL WHEN YOU EDIT THIS FILE!
+ *
+ *  This is my shitty setup for hiding the band email password from the github
+ *  repo, which is public. config.txt is a copy of this file with the password
+ *  omitted, so it should be kept up-to-date.
  */
 
 //Site domain
 $domain= "http://www.YOURDOMAIN.com/";
+
+//Site maintainer's e-mail address
+$site_maintainer_email="warriorsband@gmail.com";
 
 //Define length of salt,minimum=10, maximum=35
 $length_salt=15;

@@ -6,8 +6,8 @@ set_include_path(get_include_path().'/Sites/warriorsband.com/pear'.PATH_SEPARATO
 require_once("Mail.php");
 
 if (isset($_POST['comment'])) {
-  $from = "Warriors Band <" . $email_username . ">";
-  $to = "<ironmaiden1158@gmail.com>";
+  $from = "Warriors Band Website<" . $email_username . ">";
+  $to = "<$site_maintainer_email>";
   $subject = "Warriors Band Comment / Bug Report";
 
   $headers = array ('From' => $from, 
@@ -19,7 +19,7 @@ if (isset($_POST['comment'])) {
     'auth' => true,
     'username' => $email_username,
     'password' => $email_password));
-  $body = "User id: " . $_SESSION['user_id'] . "\n\nComment:\n" . $_POST['comment'];
+  $body = "Name: " . $_SESSION['first_name'] . "\n\nComment:\n" . $_POST['comment'];
 
   $mail = $smtp->send($to, $headers, $body);
 
