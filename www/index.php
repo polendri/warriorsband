@@ -75,7 +75,8 @@ require($_SERVER['DOCUMENT_ROOT'].'/auth/timeout.php');
             <tr <?php echo row_color() ?> ><td>
               <a href="/?page=jointheband">Join the Band</a>
             </td></tr>
-<?php if (logged_in()) {
+<?php
+if (logged_in()) {
   row_color(TRUE); ?>
             <tr><th class="center">Member links</th></tr>
             <tr <?php echo row_color() ?> ><td>
@@ -90,23 +91,41 @@ require($_SERVER['DOCUMENT_ROOT'].'/auth/timeout.php');
             <tr <?php echo row_color() ?> ><td>
               <a href="/auth/logout.php">Logout</a>
             </td></tr>
-<?php if (user_type_greater_eq(2)) {
-  row_color(TRUE); ?>
+<?php
+  if (user_type_greater_eq(2)) {
+    row_color(TRUE); ?>
             <tr><th class="center">Exec links</th></tr>
+<?php
+    if (auth_register_user()) { ?>
             <tr <?php echo row_color() ?> ><td>
               <a href="/?page=register">Register new user</a>
             </td></tr>
+<?php
+    } if (auth_edit_events()) { ?>
             <tr <?php echo row_color() ?> ><td>
               <a href="/?page=event">Create new event</a>
             </td></tr>
+<?php
+    }
+  }
+  if (user_type_greater_eq(3)) {
+    row_color(TRUE); ?>
+            <tr><th class="center">Admin links</th></tr>
+<?php
+    if (auth_upload_photos()) { ?>
             <tr <?php echo row_color() ?> ><td>
               <a href="/?page=uploadphotos">Upload photos</a>
             </td></tr>
-<?php } } else { ?>
+<?php
+    }
+  }
+} else { ?>
             <tr <?php echo row_color() ?> ><td>
               <a href="/?page=login">Login</a>
             </td></tr>
-<?php } row_color(TRUE); ?>
+<?php
+}
+row_color(TRUE); ?>
           </table>
         </td>
         <td id="content" class="contenttd" valign="top">
