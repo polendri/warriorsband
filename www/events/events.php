@@ -3,7 +3,7 @@
 /*
  *  events.php
  *
- *  Lists band events and provides buttons for execs to create new events
+ *  Lists band events, with a dropdown by which to filter the events list.
  */
 
 require_once($_SERVER['DOCUMENT_ROOT'].'/auth/auth-functions.php');

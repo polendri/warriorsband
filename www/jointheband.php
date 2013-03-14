@@ -1,15 +1,20 @@
 <?php
+/*
+ *  jointheband.php
+ *
+ *  A form like bugreport.php in which a user can write a message which is
+ *  emailed to the band address.
+ */
 
 require_once($_SERVER['DOCUMENT_ROOT'].'/auth/auth-functions.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/config/config.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/config/display.php');
+// Include Pear library's Mail.php in order to send email
 set_include_path(get_include_path().'/Sites/warriorsband.com/pear'.PATH_SEPARATOR);
 require_once("Mail.php");
 
-row_color(TRUE);
-
 if (isset($_POST['name']) && isset($_POST['email']) && isset($_POST['message'])) {
-  //Sanitize and validate input
+  // Sanitize and validate input
   $name=htmlspecialchars(trim($_POST["name"]));
   $email=sanitize($_POST["email"]);
   $message=htmlspecialchars(trim($_POST["message"]));
@@ -26,23 +31,29 @@ if (isset($_POST['name']) && isset($_POST['email']) && isset($_POST['message']))
     error_and_exit("Message must be at most 10000 characters.");
   }
 
+  // Set email headers
   $from = "$name <$email>";
   $to = "Warriors Band <$email_username>";
   $subject = jointheband_email_subject($name);
-
   $headers = array ('From' => $from, 
     'To' => $to,
     'Subject' => $subject);
+
+  // Do email authentication
   $smtp = Mail::factory('smtp',
     array ('host' => $email_host,
     'port' => $email_port,
     'auth' => true,
     'username' => $email_username,
     'password' => $email_password));
+
+  // Set the body of the email
   $body = jointheband_email_message($name, $email, $message);
 
+  // Send the email
   $mail = $smtp->send($to, $headers, $body);
 
+  // Check for any errors and return the result
   if (!PEAR::isError($mail)) {
     header("Location: $domain?page=jointheband&msg=jointhebandsuccess");
   } else {

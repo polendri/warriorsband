@@ -43,9 +43,13 @@ if (!isset($_SESSION['logged_in'])) {
   $_SESSION['logged_in'] = FALSE;
 }
 
-//Make sure the user is not logged in and has submitted the required parameters
-if ($_SESSION['logged_in'] == TRUE || !isset($_POST["password"]) || !isset($_POST["email"])) {
-  error_and_exit("Already logged in, or email/password not sent");
+//Exit if the user is not already logged in
+if ($_SESSION['logged_in'] == TRUE) {
+  error_and_exit("Already logged in");
+}
+//Exit if the an email or password was not provided
+if (!isset($_POST["password"]) || !isset($_POST["email"])) {
+  error_and_exit("Bad data (email or password missing)");
 }
 
 //Sanitize the submitted email and password

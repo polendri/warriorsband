@@ -3,7 +3,9 @@
 /*
  *  albums/album.php
  *  
- *  Displays the photos in a photo album.
+ *  Displays the photos in a photo album. If no photo ID is specified, this
+ *  displays previews of all the photos in a grid; otherwise it displays an
+ *  individual image full-size with links to previous/next images.
  */
 
 require_once($_SERVER['DOCUMENT_ROOT'].'/auth/auth-functions.php');

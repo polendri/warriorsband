@@ -3,8 +3,9 @@
 /*
  *  display.php
  *
- *  A collection of functions/strings which print messages, help format displayed content,
- *  print errors, or define the printing/displaying of data types
+ *  A collection of functions/strings which print messages, help format
+ *  displayed content, print errors, or define the printing/displaying of data
+ *  types
  */
 
 //Print a message if one is requested

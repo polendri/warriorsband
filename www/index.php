@@ -3,9 +3,9 @@
 /*
  *  index.php
  *
- *  This page contains the banner at the top of the page, and the navigation sidebar.
- *  It accepts `page` via GET, and the value of `page` defines what content will be 
- *  displayed.
+ *  This page contains the banner at the top of the page, and the navigation
+ *  sidebar. It accepts `page` via GET, and the value of `page` defines what
+ *  content will be displayed.
  */
 
 session_start(); 
@@ -117,6 +117,11 @@ if (logged_in()) {
               <a href="/?page=uploadphotos">Upload photos</a>
             </td></tr>
 <?php
+    } if (auth_access_admin_panel()) { ?>
+            <tr <?php echo row_color() ?> ><td>
+              <a href="/?page=adminpanel">Admin panel</a>
+            </td></tr>
+<?php
     }
   }
 } else { ?>
@@ -137,6 +142,9 @@ if (isset($_GET['page'])) {
       break;
     case "about":
       require($_SERVER['DOCUMENT_ROOT'].'/about.php');
+      break;
+    case "adminpanel":
+      require($_SERVER['DOCUMENT_ROOT'].'/admin/adminpanel.php');
       break;
     case "album":
       require($_SERVER['DOCUMENT_ROOT'].'/albums/album.php');

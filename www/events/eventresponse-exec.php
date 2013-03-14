@@ -3,6 +3,7 @@
 /*
  *  eventresponse-exec.php
  *
+ *  Validates and processes a user's attendance response to an event.
  */
 
 session_start();

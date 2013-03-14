@@ -1,0 +1,30 @@
+There should be a file in this directory called database.php, containing the
+following code. If you are viewing this through the github repo, database.php
+is not there, so that our password is not shown in plaintext. You could get
+things working by creating a config.php file yourself with the following
+content, modified appropriately.
+
+
+
+
+
+<?php
+
+/*
+ *  database.php
+ *
+ *  Connect to the database with the provided parameters
+ */
+
+//Database connection parameters
+$username = "warriorsband";
+$password = "PASSWORD";
+$hostname = "localhost";
+$database = "DATABASENAME";
+
+//You should not need to edit this
+$mysqli = new mysqli($hostname, $username, $password, $database);
+if ($mysqli->connect_errno) {
+  echo "Failed to connect to MySQL database.";
+}
+?>

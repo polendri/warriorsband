@@ -6,8 +6,9 @@
  *  Form which posts a login request to login-exec.php for validation.
  *  Accepts the following via GET:
  *
- *    redirect_url: An optional string indicating the URL (relative to the domain and starting 
- *                  with a /) to redirect to if login is successful.
+ *    redirect_url:  An optional string indicating the URL (relative to the
+ *                   domain and starting with a /) to redirect to if login is
+ *                   successful.
  */
 
 if (isset($_GET['redirect_page'])) {

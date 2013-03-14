@@ -1,15 +1,29 @@
 <?php
-require_once($_SERVER['DOCUMENT_ROOT'].'/auth/auth.php');
+/*
+ *  bugreport.php
+ *
+ *  A form in which a user can enter a message to be sent to the site
+ *  maintainer. This is one of the few pages which is both a form AND receives
+ *  a form; I usually like to keep them separate, but this is a small and
+ *  likely temporary page so I didn't bother with two files.
+ *
+ *  TODO: Validate comment string before emailing it!!! If someone was an ass
+ *        they could be emailing books worth of content to the site maintainer.
+ */
+
+require_once($_SERVER['DOCUMENT_ROOT'].'/auth/auth.php'); // Require login
 require_once($_SERVER['DOCUMENT_ROOT'].'/config/config.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/config/display.php');
+// Include Pear library's Mail.php in order to send email
 set_include_path(get_include_path().'/Sites/warriorsband.com/pear'.PATH_SEPARATOR);
 require_once("Mail.php");
 
+// Sent a message if one was posted
 if (isset($_POST['comment'])) {
+  // Set email headers and email login info
   $from = "Warriors Band Website<" . $email_username . ">";
   $to = "<$site_maintainer_email>";
   $subject = "Warriors Band Comment / Bug Report";
-
   $headers = array ('From' => $from, 
     'To' => $to,
     'Subject' => $subject);
@@ -19,10 +33,15 @@ if (isset($_POST['comment'])) {
     'auth' => true,
     'username' => $email_username,
     'password' => $email_password));
+
+  // Set the email body based on the comment submitted
+  // TODO: validate comment string
   $body = "Name: " . $_SESSION['first_name'] . "\n\nComment:\n" . $_POST['comment'];
 
+  // Send the email
   $mail = $smtp->send($to, $headers, $body);
 
+  // Check the result and report success/failure appropriately
   if (!PEAR::isError($mail)) {
     header("Location: $domain?page=bugreport&msg=bugreportsuccess");
   } else {

@@ -1,0 +1,159 @@
+Here's a breakdown of the website design, followed by a quick description of
+the purpose/contents of each page.
+
+Essentially, every page viewed is index.php; index.php contains the logo at
+the top of the page and the left sidebar of links, and what it includes as the
+page contents is decided by the "page" parameter. For example, the users list
+page is users/users.php, but the link to this page is index.php?page=users.
+This was my solution to having top/side bars without code duplication, but it
+is a terrible, terrible plan. By all means change this to something more
+sensible.
+
+What that means is, when you create a new page, you have to add it to the list
+of pages handled by index.php; if it is a main page, add it to the sidebar also
+in index.php; and when you link to a page, use the index.php?page=PAGE link
+rather than the direct link.
+
+
+
+403.php
+404.php
+    Really basic 403/404 pages, which shouldn't really ever be seen.
+about.php
+    A paragraph with info about the band; the "About" sidebar link.
+bugreport.php
+    A form which allows logged-in users to send a comment by email to the
+    site maintainer.
+index.php
+    Master page (as described above).
+jointheband.php
+    A form which allows anyone to send an email, along with their return
+    email address, to the warriorsband account.
+
+admin/
+    adminpanel.php
+        A form with fields/buttons to perform various administrator-only tasks,
+        like changing the frontpage photo. Submits to admin/adminpanel-exec.php
+    adminpanel-exec.php
+        Receives a form and performs the appropriate admin action.
+
+albums/
+    album-functions.php
+        Contains a few helper functions for recursively removing directories
+        and for resizing images.
+    albumlist.php
+        A page which lists all photo albums in a grid with preview images. 
+    album.php
+        Displays a photo from an album, or previous of the entire album if no
+        photo ID is specified.
+    deletealbum-exec.php
+        Page which processes requests to delete an album.
+    upload-exec.php
+        Page which processes album upload requests.
+    upload.php
+        A form for submitting a ZIP file and title/description to
+        upload-exec.php in order to upload an album.
+
+auth/
+    auth-functions.php
+        Contains functions which sanitize inputs, and functions which decide
+        whether a user has permission to perform a given task. If you want to
+        change what kind of user is allowed to perform a given task, you likely
+        can just make a simple change here.
+    auth.php
+        Redirects to the login page if the user is not logged in. If a page is
+        to be for logged-in users only, it should include this page so that
+        users will be properly redirected.
+    changepass.php
+        A simple form with a "change password" prompt, which posts to
+        users/profile-exec.php.
+    login-exec.php
+        Receives a login form and attempts to log in a user, redirecting to a
+        specified page if successful.
+    login.php
+        Login page which posts to login-exec.php
+    logout.php
+        Ends a session if it exists and redirects to the homepage.
+    timeout.php
+        Ends a session if it has been inactive for the amount of time
+        specified in config/config.php. This page is included in index.php
+        such that it is run every time the user loads a page.
+
+config/
+    config.php
+        Contains all kinds of configuration settings for the site in general.
+        Pages which require any of this info include this page.
+    config.txt
+        config.php contains the login details for the band account; thus it's
+        a bad idea to post that publicly on github! This file is a copy of
+        config.php with the login details omitted, and THIS one is submitted to
+        github while config.php is not. REMEMBER TO UPDATE THIS FILE, otherwise
+        you could lose config file changes!
+    database.php
+        Connects to the database. Must be included by any page which uses the
+        database.
+    database.txt
+        Similarly to config.php, this is the file included in the repository
+        so that database login information is not publicly available
+    display.php
+        A big collection of functions for printing messages. Any message which
+        is not an unexpected error should be made into a function here, so
+        that message content can be easily modified.
+    style.css
+        Formatting style for the site.
+
+events/
+    deleteevent-exec.php
+        Page which processes requests to delete events.
+    event-exec.php
+        Validates and processes requests to create/update events.
+    event.php
+        If an event is specified, this displays event details, in an editable
+        way if the user has edit permissions. If no event is specified, this
+        page provides a form for creating a new event.
+    eventresponse-exec.php
+        Processes attendance responses to events.
+    eventresponses.php
+        Lists all the responses to a given event.
+    events.php
+        Lists all band events in table form.
+
+history/
+    annotated.php
+    halifax.php
+    history.php
+    olympics.php
+    playboy.php
+    queen.php
+        Various pages containing band history content.
+
+images/
+    band_photo.jpg
+    logo.png
+    uw_crest.png
+    albums/
+        Directory in which photo albums go
+    history/
+        Photos for the history pages
+
+users/
+    deleteuser-exec.php
+        Page which processes requests to delete a user.
+    passwordreset-exec.php
+        Page which processes requests (made by an admin user) to reset another
+        user's password.
+    profile-exec.php
+        Receives a profile update request and attempts to process it.
+    profile.php
+        Displays the profile of the request user (the parts which the viewer
+        is allowed to view). Allows users with appropriate permissions to edit
+        the profile, by posting to profile-exec.php.
+    register-exec.php
+        Processes requests to register a new user. If successful, this will
+        create a new account and send the recipient an email with their
+        temporary password.
+    register.php
+        Page which allows exec/admin users to register a new member. Posts to
+        register-exec.php.
+    users.php
+        Displays a list of all users, with links to their profiles.

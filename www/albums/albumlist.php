@@ -3,7 +3,7 @@
 /*
  *  albums/albumlist.php
  *
- *  Lists all photo albums.
+ *  A page which lists all photo albums in a grid of "Polaroid-style" previews.
  */
 
 require_once($_SERVER['DOCUMENT_ROOT'].'/auth/auth-functions.php');
@@ -41,11 +41,14 @@ if(auth_view_photos()) {
 ?>
 <ul>
 <?php
+    // For each photo album
     while ($album_row = $result->fetch_assoc()) {
+      // Build absolute/web links to the preview image
       $path_suffix = $album_row['album_id'] . "/thumbs/0000.jpg";
       $image_preview_path = $photo_album_rel_path . "/" . $path_suffix;
       list($width, $height, $image_type) = getimagesize($photo_album_abs_path . "/" . $path_suffix);
       $album_link = $domain . '?page=album&amp;album_id=' . $album_row['album_id'];
+      // Display an entry for this album
 ?>
   <li class="imageborderwithcaption" style="width:<?php echo $width + 2 ?>px">
     <a href="<?php echo $album_link ?>">
@@ -59,6 +62,7 @@ if(auth_view_photos()) {
     <br />
       <?php echo $album_row['description'] ?>
 <?php
+      // Additionally display a delete button if the user is allowed to use it
       if (auth_delete_photos()) { ?>
     <br />
     <form action="/albums/deletealbum-exec.php" method="POST">

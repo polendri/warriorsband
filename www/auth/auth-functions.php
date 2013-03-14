@@ -3,8 +3,8 @@
 /*
  *  auth-functions.php
  *
- *  Contains functions used to authenticate users and make decisions based on 
- *  their credentials.
+ *  Contains functions to sanitize inputs and functions to decide whether a
+ *  user has permission to perform a given task.
  */
 
 //Hash a password securely
@@ -282,5 +282,11 @@ function auth_delete_events() {
 // Can the user view the full list of event responses?
 function auth_view_responses() {
   return user_type_greater_eq(2);
+}
+
+// Access to the admin panel
+// (THERE IS REALLY NO REASON WHY THIS SHOULD EVER ALLOW NON-ADMIN USERS)
+function auth_access_admin_panel() {
+  return user_type_greater_eq(3);
 }
 ?>
