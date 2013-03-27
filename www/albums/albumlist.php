@@ -81,8 +81,8 @@ if(auth_view_photos()) {
 ?>
   </li>
 <?php
-      $result->free();
     }
+    $result->free();
 ?>
 </ul>
 <?php
